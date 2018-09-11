@@ -43,12 +43,6 @@ const getAll = {
 
 const create = {
   validate: {
-    body: {
-      name: Joi.string(),
-      password: Joi.string(),
-      email: Joi.string().email(),
-      tags: Joi.array().optional(),
-    },
     type: 'json',
   },
   handler: async (ctx) => {
@@ -62,20 +56,13 @@ const create = {
       ctx.body = Boom.badRequest();
     }
     ctx.logger.info('写入数据库成功[创建用户]:', user);
-    ctx.status = 201;
+    ctx.status = 200;
     ctx.body = user;
   },
 };
 
 const update = {
   validate: {
-    body: {
-      id: Joi.string(),
-      name: Joi.string(),
-      password: Joi.string(),
-      email: Joi.string().email(),
-      tags: Joi.array().optional(),
-    },
     type: 'json',
   },
   handler: async (ctx) => {
@@ -109,7 +96,7 @@ const remove = {
       ctx.body = Boom.badImplementation();
     }
     ctx.logger.info('写入数据库成功[删除用户资料]', id);
-    ctx.status = 204;
+    ctx.status = 200;
     ctx.body = {};
   },
 };
