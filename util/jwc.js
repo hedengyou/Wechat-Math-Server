@@ -7,7 +7,7 @@ function loginAuth(username, password, name, cookie) {
     (reslove, reject) => {
       if (!username || !password) {
         // 账号或密码为空，直接报错
-        return reject();
+        return reject('账号密码不能为空');
       }
       const postLogin = (c) => {
         const loginOption = {
@@ -26,7 +26,7 @@ function loginAuth(username, password, name, cookie) {
         request.post(loginOption, function(loginError, loginRes, loginBody) {
           if (loginError) {
             // 登录出错
-            return reject();
+            return reject('登录验证请求失败');
           } else {
             // 登录成功
             if (!name) {
@@ -42,12 +42,11 @@ function loginAuth(username, password, name, cookie) {
               };
               request.get(indexOption, function(error, res, body) {
                 if (error) {
-                  return reject();
+                  return reject('访问index.jsp失败');
                 }
-                // console.log(body);
                 const result = analysis(body);
                 if (!result) {
-                  return reject();
+                  return reject('从index.jsp解析name失败');
                 }
                 return reslove(result);
               });
@@ -82,10 +81,11 @@ function loginAuth(username, password, name, cookie) {
 }
 
 function analysis(htmlStr) {
-  if (htmlStr.indexOf('验证码')) {
-    // 检索到 验证码 字符串，说明登录太频繁，教务处登录后台自动添加了验证码功能，需等待一段时间再尝试登录
-    return null;
-  }
+  // console.log(htmlStr);
+  // if (htmlStr.indexOf('验证码')) {
+  //   // 检索到 验证码 字符串，说明登录太频繁，教务处登录后台自动添加了验证码功能，需等待一段时间再尝试登录
+  //   return null;
+  // }
   const $ = cheerio.load(htmlStr); // 根据html字符串生成一个类jQ的全局对象
   const domStr = $('.user-info').html();
   const nameCode = domStr.split('</small>')[1].trim();
