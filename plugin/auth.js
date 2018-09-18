@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const Boom = require('boom');
 
 const praseToken = (token) => new Promise(
   (reslove, reject) => {
@@ -27,7 +26,7 @@ module.exports = function(){
       ctx.logger.error('错误![权限验证]:', error);
     }
     if (!res) {
-      ctx.body = Boom.unauthorized('无效的Token');
+      ctx.throw(401, '无效的Token');
     } else {
       ctx.logger.info('成功！[权限验证]', res);
       ctx.auth = res;

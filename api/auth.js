@@ -1,4 +1,3 @@
-const Boom = require('boom');
 const router = require('koa-joi-router');
 const jwt = require('jsonwebtoken');
 
@@ -29,7 +28,7 @@ const login = {
       record = await userModel.findOne({ roleId });
     } catch (error) {
       ctx.logger.error('错误！查询用户数据库失败！[用户登录]', error);
-      ctx.body = Boom.badRequest('用户登录失败，查询数据库错误');
+      ctx.throw(400, '用户登录失败，查询数据库错误');
     }
     let name = '';
     ctx.logger.info('正在进行教务处登录[用户登录]', roleId);
@@ -37,11 +36,11 @@ const login = {
       name = await loginAuth(roleId, password, record ? record.name : null);
     } catch (error) {
       ctx.logger.error('错误!教务处登录失败！[用户登录]', error);
-      ctx.body = Boom.badRequest('教务处登录失败，查询失败');
+      ctx.throw(400, '教务处登录失败，查询失败');
     }
     if (!name) {
       ctx.logger.error('教务处登录失败！[用户登录]', roleId);
-      ctx.body = Boom.badRequest('教务处登录失败，查询姓名为空');
+      ctx.throw(400, '教务处登录失败，查询姓名为空');
     }
     ctx.logger.info('教务处登录成功！[用户登录]', roleId, name);
     if (!record) {
@@ -54,7 +53,7 @@ const login = {
         await modelInstance.save();
       } catch (error) {
         ctx.logger.error('错误!写入数据库错误![创建用户]:', error);
-        ctx.body = Boom.badRequest('用户登录失败，创建用户错误');
+        ctx.throw(400, '用户登录失败，创建用户错误');
       }
     }
     ctx.logger.info('即将创建Token！[用户登录]', name);
