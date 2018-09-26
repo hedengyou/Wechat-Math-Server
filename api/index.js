@@ -23,7 +23,9 @@ mainRoute.route([
   { method: 'PUT', path: '/user', ...user.update },
   { method: 'DELETE', path: '/user/:id', ...user.remove },
   { method: 'GET', path: '/lessons', ...lesson.getAll },
-  { method: 'POST', path: '/lesson', ...lesson.create }
+  { method: 'POST', path: '/lesson', ...lesson.create },
+  { method: 'GET', path: '/lesson/:id', ...lesson.getOne },
+  { method: 'GET', path: '/lesson/name/:name', ...lesson.getOneByName },
 ]);
 
 authRoute.prefix('/api');

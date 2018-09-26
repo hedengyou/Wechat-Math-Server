@@ -17,6 +17,50 @@ const getAll = {
   },
 };
 
+const getOne = {
+  validate: {
+    params: {
+      id: Joi.string(),
+    },
+  },
+  handler: async (ctx) => {
+    const { params: { id } } = ctx;
+    ctx.logger.info('params[查询单个课程资料]:', id);
+    let lesson;
+    try {
+      lesson = await lessonModel.findOne({ _id: id });
+    } catch (error) {
+      ctx.logger.error('错误!查询数据库错误![查询单个课程资料]:', error);
+      ctx.throw(500, '查询数据库出错');
+    }
+    ctx.logger.info('查询数据库成功[查询单个课程资料]: ', lesson);
+    ctx.status = 200;
+    ctx.body = lesson;
+  },
+};
+
+const getOneByName = {
+  validate: {
+    params: {
+      name: Joi.string(),
+    },
+  },
+  handler: async (ctx) => {
+    const { params: { name } } = ctx;
+    ctx.logger.info('params[查询单个课程资料by Name]:', name);
+    let lesson;
+    try {
+      lesson = await lessonModel.findOne({ name });
+    } catch (error) {
+      ctx.logger.error('错误!查询数据库错误![查询单个课程资料by Name]:', error);
+      ctx.throw(500, '查询数据库出错');
+    }
+    ctx.logger.info('查询数据库成功[查询单个课程资料by Name]: ', lesson);
+    ctx.status = 200;
+    ctx.body = lesson;
+  },
+};
+
 const create = {
   validate: {
     payload: {
@@ -44,5 +88,7 @@ const create = {
 
 module.exports = {
   getAll,
-  create
+  create,
+  getOne,
+  getOneByName
 };
