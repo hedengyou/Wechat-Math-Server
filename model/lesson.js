@@ -8,6 +8,7 @@ module.exports= mongoose.model(
   new Schema({
     name: { type: String, default: '' }, // 课程名
     description: { type: String, default: '' }, // 课程描述
+    cover: { type: String, default: '' }, // 封面图
     chapters: [new Schema({
       name: { type: String, default: '' },
       subChapters: [new Schema({
