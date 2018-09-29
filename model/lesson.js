@@ -7,9 +7,16 @@ module.exports= mongoose.model(
   'Lesson',
   new Schema({
     name: { type: String, default: '' }, // 课程名
-    chapter: [{ type: String, default: '' }], // 章节名
-    subChapter: [{ type: String, default: '' }], // 子章节名
-    video: { type: Schema.Types.ObjectId, ref: '' } // 每个子章节关联一个视频，通过ObjectId ref关联video实体
+    description: { type: String, default: '' }, // 课程描述
+    chapters: [new Schema({
+      name: { type: String, default: '' },
+      subChapters: [new Schema({
+        name: { type: String, default: '' },
+        video: { type: Schema.Types.ObjectId, ref: 'Video' }
+      })]
+    })], // 章节
+    // subChapter: [{ type: String, default: '' }], // 子章节名
+    // video: { type: Schema.Types.ObjectId, ref: '' } // 每个子章节关联一个视频，通过ObjectId ref关联video实体
   },{
     toObject: { transform },
     toJSON: { transform }

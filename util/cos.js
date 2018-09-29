@@ -13,10 +13,21 @@ const params = {
 
 const baseUrl = `https://${params.Bucket}.cos.${params.Region}.myqcloud.com/`;
 
-cos.getBucket(params, function(err, data) {
-  if(err) {
-    console.log(err);
-  } else {
-    console.log(data);
-  }
-});
+// cos.getBucket(params, function(err, data) {
+//   if(err) {
+//     console.log(err);
+//   } else {
+//     console.log(data);
+//   }
+// });
+// cos.headObject({
+//   Bucket: 'video-1253626956',    /* 必须 */
+//   Region: 'ap-chengdu',    /* 必须 */
+//   Key: 'YqJuIojn_3126719941.mp4'
+// }, function(err, data) {
+//   if(err) {
+//     console.log(err);
+//   } else {
+//     console.log(data);
+//   }
+// });

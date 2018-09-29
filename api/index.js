@@ -2,7 +2,8 @@ const router = require('koa-joi-router');
 const hello = require('./hello');
 const user = require('./user');
 const auth = require('./auth');
-const lesson = require('./lessson');
+const lesson = require('./lesson');
+const video = require('./video');
 
 const authMiddleWare = require('../plugin/auth');
 
@@ -26,11 +27,12 @@ mainRoute.route([
   { method: 'POST', path: '/lesson', ...lesson.create },
   { method: 'GET', path: '/lesson/:id', ...lesson.getOne },
   { method: 'GET', path: '/lesson/name/:name', ...lesson.getOneByName },
+  { method: 'GET', path: '/video/:id', ...video.getOne }
 ]);
 
 authRoute.prefix('/api');
 authRoute.route([
-  { method: 'POST', path: '/login', ...auth.login },
+  { method: 'POST', path: '/login', ...auth.login }
 ]);
 
 module.exports = [ publicRoute, mainRoute, authRoute ];
