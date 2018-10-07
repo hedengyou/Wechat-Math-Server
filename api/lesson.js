@@ -2,6 +2,7 @@ const router = require('koa-joi-router');
 const Joi = router.Joi;
 
 const lessonModel = require('../model/lesson');
+const questionModel = require('../model/question');
 
 const getAll = {
   handler: async (ctx) => {
@@ -15,6 +16,38 @@ const getAll = {
     ctx.logger.info('查询数据库成功[查询全部课程资料]: ', lessons);
     ctx.body = lessons;
   },
+};
+
+const getQuestions = {
+  validate: {
+    body: {
+      lesson: Joi.string(),
+      chapter: Joi.string(),
+      subChapter: Joi.string()
+    },
+    type: 'json'
+  },
+  handler: async (ctx) => {
+    const { lesson, chapter, subChapter } = ctx.request.body;
+    ctx.logger.info('payload[查询指定子章节下的题目数据]', { lesson, chapter, subChapter });
+    let res;
+    try {
+      res = await lessonModel.findOne({ name: lesson });
+    } catch (error) {
+      ctx.logger.error('错误！查询数据库错误！[查询指定子章节下的题目数据]', error);
+      ctx.throw(500, '查询数据库出错');
+    }
+    res = res.toJSON();
+    const ques = res.chapters.find(x => x.name === chapter).subChapters.find(x => x.name === subChapter).questions;
+    let questions = [];
+    try {
+      questions = await questionModel.find({ _id: { $in: ques } } );
+    } catch (error) {
+      ctx.logger.error('错误！查询数据库错误！[查询指定子章节下的题目数据]', error);
+      ctx.throw(500, '查询数据库出错');
+    }
+    ctx.body = {};
+  }
 };
 
 const getOne = {
@@ -90,5 +123,6 @@ module.exports = {
   getAll,
   create,
   getOne,
-  getOneByName
+  getOneByName,
+  getQuestions
 };

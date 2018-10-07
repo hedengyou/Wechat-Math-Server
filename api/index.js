@@ -27,6 +27,7 @@ mainRoute.route([
   { method: 'POST', path: '/lesson', ...lesson.create },
   { method: 'GET', path: '/lesson/:id', ...lesson.getOne },
   { method: 'GET', path: '/lesson/name/:name', ...lesson.getOneByName },
+  { method: 'POST', path: '/lesson/getQuestions', ...lesson.getQuestions },
   { method: 'GET', path: '/video/:id', ...video.getOne }
 ]);
 
