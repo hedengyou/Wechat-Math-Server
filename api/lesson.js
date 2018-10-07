@@ -41,12 +41,13 @@ const getQuestions = {
     const ques = res.chapters.find(x => x.name === chapter).subChapters.find(x => x.name === subChapter).questions;
     let questions = [];
     try {
-      questions = await questionModel.find({ _id: { $in: ques } } );
+      questions = await questionModel.find({ _id: { $in: ques } }, { answer: 0, standard: 0 } );
     } catch (error) {
       ctx.logger.error('错误！查询数据库错误！[查询指定子章节下的题目数据]', error);
       ctx.throw(500, '查询数据库出错');
     }
-    ctx.body = {};
+    ctx.logger.info('查询数据库成功！[查询指定子章节下的题目数据]', questions);
+    ctx.body = questions;
   }
 };
 

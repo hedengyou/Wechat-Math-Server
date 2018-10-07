@@ -8,6 +8,7 @@ module.exports = mongoose.model(
   new Schema({
     type: { type: String, enum: ['subjective', 'objective'], default: 'objective' }, // 试题类型, 主观题和客观题(选择题)
     title: new Schema({ // 题目标题
+      _id: false,
       type: { type: String, enum: ['text', 'img'], required: true }, // 题目标题的类型，text为文字，img为图片的url地址
       content: { type: String, default: '' } // 标题的内容,根据type来决定
     }),
