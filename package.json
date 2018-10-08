@@ -4,6 +4,7 @@
   "description": "koa service server",
   "main": "index.js",
   "scripts": {
+    "dev": "eslint . && nodemon main",
     "start": "eslint . && nodemon main",
     "lint": "eslint ."
   },
