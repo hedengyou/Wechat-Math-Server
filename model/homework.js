@@ -8,6 +8,7 @@ module.exports = mongoose.model(
   new Schema({
     name: { type: String, default: '' }, // 作业名
     score: { type: String, default: '' }, // 作业的分数，可以是数字也可以是简单的优良评价
+    date: { type: Date, required: true }, // 截至日期
     question: [{ type: Schema.Types.ObjectId, ref: 'Question' }], // 该作业下的所有试题，通过ObjectId和ref关联
   },{
     toObject: { transform },
