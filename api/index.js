@@ -31,7 +31,7 @@ mainRoute.route([
   { method: 'POST', path: '/lesson/getQuestions', ...lesson.getQuestions }, // 查询指定课程下子章节的问题集
   { method: 'GET', path: '/video/:id', ...video.getOne }, // 查询指定id的视频url
   { method: 'GET', path: '/homework/:id', ...homework.getOne }, // 查询指定id的作业
-  { method: 'GET', path: '/homeworks', ...homework.getAll }, // 查询所有作业
+  { method: 'GET', path: '/homeworkAll', ...homework.getAll }, // 查询所有作业
 ]);
 
 authRoute.prefix('/api');
